@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Connection Form -->
+<div id="connectionForm" class="connection-form">
+    <div class="form-content">
+        <h3>Kết nối Game Server</h3>
+        <div class="input-group">
+            <input type="text" id="playerName" placeholder="Nhap Ten" maxlength="20" value="">
+            <input type="text" id="serverIP" placeholder="Server IP" value="127.0.0.1">
+            <!-- Port input đã bị xóa: dùng defaultPort tự động từ GameConfig -->
+        </div>
+        <div class="button-group">
+            <button onclick="gameClient.connect()">Kết nối</button>
+            <button onclick="setQuickConnect()">Tự động</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Game Area - Full Screen -->
+    <div id="gameArea" class="game-area">
+        <div id="gameWorld" class="game-world"></div>
+        
+        <!-- UI Overlays -->
+        <div id="statusText" class="status-display">Chưa kết nối</div>
+        <div id="pingDisplay" class="ping-display">Ping: --ms</div>
+        <div id="playerInfo" class="player-info">0 người chơi</div>
+        <div id="debugInfo" class="debug-info">Player: N/A<br>Position: (0, 0)</div>
+    </div>
+
+    <!-- Joystick -->
+    <div class="joystick-container">
+        <div class="joystick-base"></div>
+        <div id="joystickKnob" class="joystick-knob"></div>
+    </div>
+
+    <script src="chat.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
