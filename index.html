@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+    
+<div id="loginForm" class="login-form" data-mode="login">
+    <div class="form-content">
+        <h3 id="loginTitle">Đăng Nhập</h3>
+        <div id="loginError" class="error-message hidden"></div>
+        
+        <!-- THÊM SERVER IP VÀO LOGIN FORM -->
+        <div class="input-group">
+            <input type="text" id="loginServerIP" placeholder="Server IP" value="127.0.0.1">
+            <input type="text" id="loginUsername" placeholder="Tên đăng nhập" maxlength="20" autocomplete="username">
+            <input type="password" id="loginPassword" placeholder="Mật khẩu" autocomplete="current-password">
+            <div id="confirmPassGroup" class="hidden">
+                <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button id="loginBtn" onclick="submitLogin()">Đăng Nhập</button>
+            <button id="switchBtn" type="button" onclick="toggleLoginMode()">Chưa có tài khoản?</button>
+            <button type="button" onclick="setQuickLoginServer()">Auto Server</button>
+        </div>
+    </div>
+</div>
+
+<!-- CONNECTION FORM - CHỈ CÒN NHẬP TÊN -->
+<div id="connectionForm" class="connection-form">
+    <div class="form-content">
+        <h3>Kết nối Game Server</h3>
+        <div class="input-group">
+            <input type="text" id="playerName" placeholder="Nhap Ten" maxlength="20" value="">
+        </div>
+        <div class="button-group">
+            <button onclick="gameClient.connect()">Kết nối</button>
+        </div>
+        
+        <div class="logout-section">
+            <button id="logoutBtn" class="logout-button" onclick="logout()">Đăng xuất</button>
+            <small id="currentUser" class="current-user-info"></small>
+        </div>
+    </div>
+</div>
+
+    <!-- Game Area - Full Screen -->
+    <div id="gameArea" class="game-area">
+        <div id="gameWorld" class="game-world"></div>
+        
+        <!-- UI Overlays -->
+        <div id="statusText" class="status-display">Chưa kết nối</div>
+        <div id="pingDisplay" class="ping-display">Ping: --ms</div>
+        <div id="playerInfo" class="player-info">0 người chơi</div>
+        <div id="debugInfo" class="debug-info">Player: N/A<br>Position: (0, 0)</div>
+        
+        <!-- Thêm vào playerHPContainer -->
+<div id="playerHPContainer" class="player-hp-container">
+    <div class="hp-label"></div>
+    <div class="hp-bar-wrapper">
+        <div id="playerHPBar" class="player-hp-bar">
+            <div id="playerHPFill" class="player-hp-fill" style="width: 100%"></div>
+        </div>
+        <div id="playerHPText" class="hp-text">100/100</div>
+    </div>
+    
+    <!-- THÊM THANH EXP -->
+    <div class="exp-label"></div>
+    <div class="hp-bar-wrapper">
+        <div id="playerExpBar" class="player-exp-bar">
+            <div id="playerExpFill" class="player-exp-fill" style="width: 0%"></div>
+        </div>
+        <div id="playerExpText" class="exp-text">0/100</div>
+    </div>
+</div>
+    </div>
+
+    <!-- Joystick -->
+    <div class="joystick-container">
+        <div class="joystick-base"></div>
+        <div id="joystickKnob" class="joystick-knob"></div>
+    </div>
+    
+    <div class="attack-button-container">
+        <button id="attackBtn" class="attack-button"></button>
+    </div>
+
+    <script src="chat.js"></script>
+    <script src="script2.js"></script>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

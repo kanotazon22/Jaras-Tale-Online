@@ -1,0 +1,342 @@
+/* ===== STYLE3.CSS - CHAT & HP/EXP BARS ===== */
+
+:root {
+    --hp-width: 500px;      /* Increased from 400px */
+    --hp-height: 65px;      /* Increased from 50px */
+    --hp-radius: 12px;      /* Slightly increased radius */
+    --transition-fast: 0.3s;
+    --primary-color: #4caf50;
+    
+    /* Chat dimensions - centralized */
+    --chat-closed-height: 26px;
+    --chat-open-height: 100px;
+    --chat-header-height: 26px; /* Approximate header height */
+}
+
+/* ===== PLAYER HP BAR ===== */
+.player-hp-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    min-width: var(--hp-width);
+}
+
+/* HP bar wrapper */
+.hp-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;              /* Increased gap */
+    position: relative;
+}
+
+/* HP bar background */
+.player-hp-bar {
+    flex: 1;
+    height: var(--hp-height);
+    background: linear-gradient(180deg, #222, #2c2c2c);
+    border-radius: var(--hp-radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+}
+
+/* HP bar fill */
+.player-hp-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff4d4d 0%, #ff1a1a 50%, #cc0000 100%);
+    border-radius: calc(var(--hp-radius) - 2px);
+    transition: width var(--transition-fast) ease;
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.2); /* Enhanced shadow */
+}
+
+/* HP fill colors based on health level */
+.player-hp-fill.hp-high {
+    background: linear-gradient(90deg, #44ff44 0%, #33cc33 50%, #44ff44 100%);
+}
+
+.player-hp-fill.hp-medium {
+    background: linear-gradient(90deg, #ffff55 0%, #ffeb3b 50%, #ffff55 100%);
+}
+
+.player-hp-fill.hp-low {
+    background: linear-gradient(90deg, #ff6666 0%, #ff3333 50%, #cc0000 100%);
+}
+
+/* HP text overlay */
+.hp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 16px;        /* Increased from 13px */
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Enhanced shadow */
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ===== EXP BAR ===== */
+.exp-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;              /* Increased gap */
+    position: relative;
+    margin-top: 12px;       /* Increased margin */
+}
+
+.player-exp-bar {
+    flex: 1;
+    height: 20px;           /* Increased from 14px */
+    background: linear-gradient(180deg, #2b2b2b, #1a1a1a);
+    border-radius: 10px;    /* Increased radius */
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+}
+
+.player-exp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6666ff 0%, #4444ff 100%);
+    border-radius: 9px;     /* Adjusted radius */
+    transition: width var(--transition-fast) ease;
+    box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.2); /* Enhanced shadow */
+}
+
+.exp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 13px;        /* Increased from 11px */
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Enhanced shadow */
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Hide HP bar when not in game */
+#connectionForm:not(.hidden) ~ #gameArea .player-hp-container,
+#loginForm:not(.hidden) ~ #gameArea .player-hp-container {
+    display: none;
+}
+
+/* ===== CHAT SYSTEM ===== */
+.chat-container {
+    position: fixed;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.chat-box {
+    width: 280px;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 6px 6px 0 0;
+    border: 1px solid #4CAF50;
+    border-bottom: none;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.chat-box.closed {
+    height: var(--chat-closed-height);
+}
+
+.chat-box.open {
+    height: var(--chat-open-height);
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    background: rgba(76, 175, 80, 0.15);
+    border-bottom: 1px solid #4CAF50;
+}
+
+.unread-badge {
+    background: #ff4444;
+    color: white;
+    border-radius: 8px;
+    padding: 1px 5px;
+    font-size: 9px;
+    margin-left: 4px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.chat-title {
+    color: #4CAF50;
+    font-weight: 600;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-chat-btn {
+    background: transparent;
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.toggle-chat-btn:hover {
+    background: #4CAF50;
+    color: white;
+}
+
+.chat-messages-box {
+    /* Dynamic height calculation: total height - header height */
+    height: calc(var(--chat-open-height) - var(--chat-header-height));
+    overflow-y: auto;
+    padding: 6px;
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+.chat-messages-box::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-messages-box::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+.chat-messages-box::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 2px;
+}
+
+.chat-messages-box::-webkit-scrollbar-thumb:hover {
+    background: #45a049;
+}
+
+.chat-msg {
+    color: white;
+    padding: 3px 6px;
+    margin: 2px 0;
+    border-radius: 8px;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.08);
+    word-wrap: break-word;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-name {
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+.chat-input-box {
+    width: 280px;
+    border: 1px solid #4CAF50;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    gap: 3px;
+    padding: 6px 8px;
+    position: relative;
+    z-index: 10000;
+}
+
+#msgInput {
+    flex: 1;
+    padding: 6px 8px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    outline: none;
+    font-size: 11px;
+    border: 1px solid transparent;
+    transition: border-color 0.15s;
+}
+
+#msgInput:focus {
+    border-color: #4CAF50;
+}
+
+#sendBtn {
+    padding: 6px 12px;
+    background: #4CAF50;
+    color: white;
+    border: 1px solid #2E7D32;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    transition: all 0.15s;
+}
+
+#sendBtn:hover {
+    background: #45a049;
+    border-color: #1B5E20;
+}
+
+/* ===== RESPONSIVE FOR CHAT & BARS ===== */
+@media (max-width: 768px) {
+    :root {
+        /* Responsive chat dimensions */
+        --chat-open-height: 80px;
+        --chat-header-height: 24px;
+    }
+
+    .player-hp-container {
+        top: 10px;
+        left: 10px;
+        min-width: 200px;     /* Increased from 150px */
+    }
+
+    .hp-text,
+    .exp-text {
+        font-size: 15px;      /* Increased from 11px */
+    }
+
+    .player-hp-bar {
+        height: 18px;         /* Increased from 14px */
+    }
+
+    .player-exp-bar {
+        height: 18px;         /* Added responsive size for exp bar */
+    }
+    
+    .chat-box {
+        width: 240px;
+    }
+    
+    .chat-input-box {
+        width: 240px;
+    }
+}
+
+@keyframes portalPulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.7; }
+}
